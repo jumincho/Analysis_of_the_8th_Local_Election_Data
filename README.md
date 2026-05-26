@@ -36,7 +36,7 @@
 
 - 중앙선거관리위원회 선거통계시스템 ([info.nec.go.kr](http://info.nec.go.kr)) — 7회·8회
   지방선거, 제20대 대통령선거 시·도별 득표율 (`data/*.csv`)
-- 국가공간정보포털 — 시·도 행정경계 shapefile (`data/shapefiles/ctp_rvn.*`)
+- 국가공간정보포털 — 시·도 행정경계 shapefile (`ctp_rvn.shp` 등)
 
 ## 프로젝트 구조
 
@@ -56,15 +56,16 @@
 │   ├── 08_local_other_vote_share.csv
 │   ├── 08_local_male_age_vote_share.csv
 │   ├── 08_local_female_age_vote_share.csv
-│   ├── 20th_presidential_vote_share.csv
-│   └── shapefiles/                            # 시·도 행정경계
-│       ├── ctp_rvn.shp
-│       ├── ctp_rvn.shx
-│       ├── ctp_rvn.dbf
-│       └── ctp_rvn.prj
-└── docs/
-    └── presentation.pptx                      # 발표 슬라이드
+│   └── 20th_presidential_vote_share.csv
+├── ctp_rvn.shp                                # 시·도 행정경계 shapefile 번들
+├── ctp_rvn.shx                                #  (네 파일은 함께 보관되어야 GDAL이 인식)
+├── ctp_rvn.dbf
+└── ctp_rvn.prj
 ```
+
+> shapefile 4종(`ctp_rvn.{shp,shx,dbf,prj}`)은 저장소 루트에 그대로 두었습니다.
+> 같은 디렉터리·같은 베이스네임으로 묶여 있어야 GDAL이 정상 로드합니다. 추후
+> `data/shapefiles/` 하위로 옮기려면 R 스크립트의 경로도 함께 갱신해야 합니다.
 
 ## 실행 방법
 
@@ -91,4 +92,7 @@ source("src/presidential_local_correlation.R")
 
 ## 발표 자료
 
-- 발표 슬라이드: [`docs/presentation.pptx`](docs/presentation.pptx)
+발표 슬라이드(`제8회 지방선거 데이터 분석.pptx`)는 `main` 브랜치 히스토리에
+보존되어 있습니다. 이 브랜치를 머지한 뒤에는 `docs/presentation.pptx`로
+재배치할 것을 권장합니다 (바이너리 업로드 한계로 이 PR에서는 처리하지
+못했습니다).
