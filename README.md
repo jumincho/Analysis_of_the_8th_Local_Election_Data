@@ -13,7 +13,7 @@
 
 ## 주요 분석
 
-- **시·도별 단계구분도** — `ctp_rvn.shp`(시·도 경계)에 7회·8회 지선의 1·2위 정당
+- **시·도별 단계구분도** — `data/shapefiles/ctp_rvn.shp`(시·도 경계)에 7회·8회 지선의 1·2위 정당
   득표 차를 매핑해, 한 장의 지도로 표심의 변화를 시각화
 - **대선-지선 상관성** — 제20대 대선(2022.03)과 제8회 지선(2022.06) 사이
   더불어민주당·국민의힘 시·도별 득표율의 상관계수 산출 및 회귀선 표시
@@ -29,14 +29,14 @@
 - **언어**: R
 - **시각화**: `ggplot2`, `gridExtra`, `plotrix` (3D 파이차트), 기본 그래픽 (`symbols`, `plot`)
 - **공간 데이터**: `sp` 기반 `raster`, `rgeos`, `maptools`, `ggmap` — `ctp_rvn.shp`
-  (시·도 행정경계) 로드 및 `+proj=longlat` 재투영
+  (`data/shapefiles/ctp_rvn.shp`, 시·도 행정경계) 로드 및 `+proj=longlat` 재투영
 - **통계**: `MASS`, `agricolae`, 기본 `lm` / `cor` (회귀·상관분석)
 
 ## 데이터 출처
 
 - 중앙선거관리위원회 선거통계시스템 ([info.nec.go.kr](http://info.nec.go.kr)) — 7회·8회
   지방선거, 제20대 대통령선거 시·도별 득표율 (`data/*.csv`)
-- 국가공간정보포털 — 시·도 행정경계 shapefile (`ctp_rvn.shp` 등)
+- 국가공간정보포털 — 시·도 행정경계 shapefile (`data/shapefiles/ctp_rvn.*`)
 
 ## 프로젝트 구조
 
@@ -49,23 +49,22 @@
 │   ├── vote_share_by_gender_age.R             # 성별·연령별 득표율 버블 차트
 │   ├── other_elected_officials_ratio.R        # 기초/광역의회의원 당선자 비율
 │   └── regional_party_support_trend.R         # 지역별 양당 지지율 변화
-├── data/                                      # 전처리된 CSV
-│   ├── 07_local_vote_share.csv
+├── data/                                      # 데이터
+│   ├── 07_local_vote_share.csv                #   전처리된 득표율 CSV
 │   ├── 07_local_other_vote_share.csv
 │   ├── 08_local_vote_share.csv
 │   ├── 08_local_other_vote_share.csv
 │   ├── 08_local_male_age_vote_share.csv
 │   ├── 08_local_female_age_vote_share.csv
-│   └── 20th_presidential_vote_share.csv
-├── ctp_rvn.shp                                # 시·도 행정경계 shapefile 번들
-├── ctp_rvn.shx                                #  (네 파일은 함께 보관되어야 GDAL이 인식)
-├── ctp_rvn.dbf
-└── ctp_rvn.prj
+│   ├── 20th_presidential_vote_share.csv
+│   └── shapefiles/                            #   시·도 행정경계 shapefile 번들
+│       ├── ctp_rvn.shp                        #     (네 파일은 같은 디렉터리에
+│       ├── ctp_rvn.shx                        #      같은 베이스네임으로 묶여
+│       ├── ctp_rvn.dbf                        #      있어야 GDAL이 정상 로드)
+│       └── ctp_rvn.prj
+└── docs/
+    └── presentation.pptx                      # 발표 슬라이드
 ```
-
-> shapefile 4종(`ctp_rvn.{shp,shx,dbf,prj}`)은 저장소 루트에 그대로 두었습니다.
-> 같은 디렉터리·같은 베이스네임으로 묶여 있어야 GDAL이 정상 로드합니다. 추후
-> `data/shapefiles/` 하위로 옮기려면 R 스크립트의 경로도 함께 갱신해야 합니다.
 
 ## 실행 방법
 
@@ -92,7 +91,4 @@ source("src/presidential_local_correlation.R")
 
 ## 발표 자료
 
-발표 슬라이드(`제8회 지방선거 데이터 분석.pptx`)는 `main` 브랜치 히스토리에
-보존되어 있습니다. 이 브랜치를 머지한 뒤에는 `docs/presentation.pptx`로
-재배치할 것을 권장합니다 (바이너리 업로드 한계로 이 PR에서는 처리하지
-못했습니다).
+- 발표 슬라이드: [`docs/presentation.pptx`](docs/presentation.pptx)
