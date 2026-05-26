@@ -8,7 +8,7 @@ library(rgeos)
 library(maptools)
 
 #한국 지도 작성
-korea = shapefile("data/shapefiles/ctp_rvn.shp")
+korea = shapefile("ctp_rvn.shp")
 korea = spTransform(korea, CRS("+proj=longlat"))
 korea_map = fortify(korea)
 
